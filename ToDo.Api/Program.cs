@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 using ToDo.Api.Data;
+using ToDo.Api.DTOs;
 using ToDo.Api.Endpoints;
 using ToDo.Api.Models;
 
@@ -13,7 +14,14 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration
         .GetConnectionString("DefaultConnection"))
 );
+builder.Services.AddValidation();
 
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.CreateMap<CreateToDoItemDto, ToDoItem>();
+    cfg.CreateMap<ToDoItem, ToDoItemDto>();
+    cfg.CreateMap<UpdateToDoItemDto, ToDoItem>();
+});
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
